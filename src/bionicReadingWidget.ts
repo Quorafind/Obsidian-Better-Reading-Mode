@@ -81,7 +81,7 @@ export function bionicReadingExtension(app: App, plugin: bionicReadingPlugin) {
 						const linePos = view.state.doc.lineAt(from)?.from;
 						let syntaxNode = syntaxTree(view.state).resolveInner(linePos + 1),
 							nodeProps: string = syntaxNode.type.prop(tokenClassNodeProp),
-							excludedSection = ["hmd-codeblock", "hmd-frontmatter", "cm-inline-code", "comment"].find(token =>
+							excludedSection = ["hmd-codeblock", "hmd-frontmatter", "cm-inline-code", "comment", "header"].find(token =>
 								nodeProps?.split(" ").includes(token)
 							);
 						if (excludedSection) continue;
