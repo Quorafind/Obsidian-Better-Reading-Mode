@@ -1,10 +1,10 @@
 {
-	"id": "obsidian-sample-plugin",
-	"name": "Sample Plugin",
-	"version": "1.0.1",
-	"minAppVersion": "0.12.0",
-	"description": "This is a sample plugin for Obsidian. This plugin demonstrates some of the capabilities of the Obsidian API.",
-	"author": "Obsidian",
-	"authorUrl": "https://obsidian.md",
+	"id": "obsidian-bionic-reading-plugin",
+	"name": "Bionic Reading",
+	"version": "1.1.0",
+	"minAppVersion": "0.15.2",
+	"description": "A plugin to enable bionic reading mode in Live preview mode of Obsidian.",
+	"author": "Boninall",
+	"authorUrl": "https://github.com/Quorafind",
 	"isDesktopOnly": false
 }
