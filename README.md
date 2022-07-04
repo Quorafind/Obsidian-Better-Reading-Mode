@@ -1,4 +1,4 @@
-# Obsidian Task Progress Bar
+# Obsidian Bionic Reading
 
 A plugin to enable bionic reading mode in Live preview mode of Obsidian.
 
