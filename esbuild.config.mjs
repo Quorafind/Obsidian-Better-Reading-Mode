@@ -15,7 +15,7 @@ esbuild.build({
 	banner: {
 		js: banner,
 	},
-	entryPoints: ['src/bionicReadingIndex.ts'],
+	entryPoints: ['src/betterReadingIndex.ts'],
 	bundle: true,
 	external: [
 		'obsidian',

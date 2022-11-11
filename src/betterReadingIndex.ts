@@ -9,53 +9,53 @@ import {
 	SliderComponent,
 	ToggleComponent
 } from 'obsidian';
-import { bionicReadingExtension } from './bionicReadingWidget';
+import { betterReadingExtension } from './betterReadingWidget';
 
 // Remember to rename these classes and interfaces!
 
-interface BionicReadingSettings {
-	bionicReadingMode: boolean;
+interface BetterReadingSettings {
+	betterReadingMode: boolean;
 }
 
-const DEFAULT_SETTINGS: BionicReadingSettings = {
-	bionicReadingMode: false,
+const DEFAULT_SETTINGS: BetterReadingSettings = {
+	betterReadingMode: false,
 }
 
-export default class BionicReadingPlugin extends Plugin {
-	settings: BionicReadingSettings;
+export default class BetterReadingPlugin extends Plugin {
+	settings: BetterReadingSettings;
 	statusBarEl: HTMLElement;
 
 	async onload() {
 		await this.loadSettings();
 
 		this.setupStatusBar();
-		this.addSettingTab(new BionicReadingSettingTab(this.app, this));
-		this.registerEditorExtension(bionicReadingExtension(this.app, this));
+		this.addSettingTab(new BetterReadingSettingTab(this.app, this));
+		this.registerEditorExtension(betterReadingExtension(this.app, this));
 	}
 
 	setupStatusBar() {
 		this.statusBarEl = this.addStatusBarItem();
 		this.statusBarEl.addClass("br-statusbar-button");
-		this.statusBarEl.setText(this.settings.bionicReadingMode ? 'BioRead Mode' : 'Normal Mode');
+		this.statusBarEl.setText(this.settings.betterReadingMode ? 'BttRead Mode' : 'Normal Mode');
 
 		this.registerDomEvent(this.statusBarEl, "click", (e) => {
 			const statusBarRect =
 				this.statusBarEl.parentElement.getBoundingClientRect();
 			const statusBarIconRect = this.statusBarEl.getBoundingClientRect();
 
-			const menu = new Menu(this.app).addItem((item) => {
-				item.setTitle("Bionic Reading");
+			const menu = new Menu().addItem((item) => {
+				item.setTitle("Better Reading");
 				item.setIcon("book");
 
 				const itemDom = (item as any).dom as HTMLElement;
 				const toggleComponent = new ToggleComponent(itemDom)
-					.setValue(this.settings.bionicReadingMode)
+					.setValue(this.settings.betterReadingMode)
 					.setDisabled(true);
 
 				const toggle = async () => {
-					this.settings.bionicReadingMode = !this.settings.bionicReadingMode;
-					toggleComponent.setValue(this.settings.bionicReadingMode);
-					this.statusBarEl.setText(this.settings.bionicReadingMode ? 'BioRead Mode' : 'Normal Mode');
+					this.settings.betterReadingMode = !this.settings.betterReadingMode;
+					toggleComponent.setValue(this.settings.betterReadingMode);
+					this.statusBarEl.setText(this.settings.betterReadingMode ? 'BttRead Mode' : 'Normal Mode');
 					this.app.workspace.updateOptions();
 					await this.saveSettings();
 				};
@@ -90,11 +90,11 @@ export default class BionicReadingPlugin extends Plugin {
 	}
 }
 
-class BionicReadingSettingTab extends PluginSettingTab {
-	plugin: BionicReadingPlugin;
+class BetterReadingSettingTab extends PluginSettingTab {
+	plugin: BetterReadingPlugin;
 	private applyDebounceTimer: number = 0;
 
-	constructor(app: App, plugin: BionicReadingPlugin) {
+	constructor(app: App, plugin: BetterReadingPlugin) {
 		super(app, plugin);
 		this.plugin = plugin;
 	}
@@ -112,14 +112,14 @@ class BionicReadingSettingTab extends PluginSettingTab {
 
 		containerEl.empty();
 
-		containerEl.createEl('h2', {text: '📚 Bionic Reading'});
+		containerEl.createEl('h2', {text: '📚 Better Reading'});
 
 		new Setting(containerEl)
-			.setName('Toggle bionic reading mode')
-			.setDesc('Toggle this to enable bionic reading mode. You can also toogle this in status bar.')
+			.setName('Toggle better reading mode')
+			.setDesc('Toggle this to enable better reading mode. You can also toggle this in status bar.')
 			.addToggle((toggle) =>
-				toggle.setValue(this.plugin.settings.bionicReadingMode).onChange(async (value) => {
-					this.plugin.settings.bionicReadingMode = value;
+				toggle.setValue(this.plugin.settings.betterReadingMode).onChange(async (value) => {
+					this.plugin.settings.betterReadingMode = value;
 					this.applySettingsUpdate();
 				}));
 
@@ -129,7 +129,15 @@ class BionicReadingSettingTab extends PluginSettingTab {
 			.setName('Donate')
 			.setDesc('If you like this plugin, consider donating to support continued development:')
 			.addButton((bt) => {
-				bt.buttonEl.outerHTML = `<a href="https://www.buymeacoffee.com/boninall"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=boninall&button_colour=6495ED&font_colour=ffffff&font_family=Inter&outline_colour=000000&coffee_colour=FFDD00"></a>`;
+				// bt.buttonEl.outerHTML = `<a href="https://www.buymeacoffee.com/boninall"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=boninall&button_colour=6495ED&font_colour=ffffff&font_family=Inter&outline_colour=000000&coffee_colour=FFDD00"></a>`;
+				const aTagEL = bt.buttonEl.createEl('a', {
+					href: "https://www.buymeacoffee.com/boninall"
+				})
+				bt.buttonEl.addClass("br-donate-button");
+
+				const favicon = document.createElement("img") as HTMLImageElement;
+				favicon.src = "https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=boninall&button_colour=6495ED&font_colour=ffffff&font_family=Inter&outline_colour=000000&coffee_colour=FFDD00";
+				aTagEL.appendChild(favicon);
 			});
 	}
 }

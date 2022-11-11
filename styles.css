@@ -13,3 +13,15 @@
 .cm-bionic-reading {
 	font-weight: bold;
 }
+
+.br-donate-button {
+	height: auto;
+	width: auto;
+	padding: 0;
+}
+
+.br-donate-button a {
+	height: 50px;
+	width: auto;
+	padding: 0;
+}
