@@ -1,6 +1,6 @@
 {
 	"name": "obsidian-bionic-reading-plugin",
-	"version": "1.2.0",
+	"version": "1.2.1",
 	"description": "A plugin to enable bionic reading mode in Live preview mode of Obsidian.",
 	"main": "main.js",
 	"scripts": {

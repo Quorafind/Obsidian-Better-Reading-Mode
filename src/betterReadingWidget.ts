@@ -3,11 +3,11 @@ import { SearchCursor } from "@codemirror/search";
 import { App, MarkdownView } from 'obsidian';
 import { syntaxTree, tokenClassNodeProp } from "@codemirror/language";
 import { RegExpCursor } from "./regexp-cursor";
-import bionicReadingPlugin from "./bionicReadingIndex";
+import betterReadingPlugin from "./betterReadingIndex";
 
-class BionicReadingWidget extends WidgetType {
+class BetterReadingWidget extends WidgetType {
 	constructor(
-		readonly plugin: bionicReadingPlugin,
+		readonly plugin: betterReadingPlugin,
 		readonly view: EditorView,
 		readonly from: number,
 		readonly to: number,
@@ -15,7 +15,7 @@ class BionicReadingWidget extends WidgetType {
 		super();
 	}
 
-	eq(other: BionicReadingWidget) {
+	eq(other: BetterReadingWidget) {
 		const markdownView = app.workspace.getActiveViewOfType(MarkdownView);
 		if (!markdownView) {
 			return;
@@ -31,7 +31,7 @@ class BionicReadingWidget extends WidgetType {
 	}
 
 	toDOM() {
-		return createSpan('cm-bionic-reading');
+		return createSpan('cm-better-reading');
 		// return document.createElement("b");
 	}
 
@@ -40,44 +40,44 @@ class BionicReadingWidget extends WidgetType {
 	}
 }
 
-export function bionicReadingExtension(app: App, plugin: bionicReadingPlugin) {
+export function betterReadingExtension(app: App, plugin: betterReadingPlugin) {
 	return ViewPlugin.fromClass(
 		class {
-			bionicReadingDecorations: DecorationSet = Decoration.none;
+			betterReadingDecorations: DecorationSet = Decoration.none;
 
 			constructor(public view: EditorView) {
-				let { bionic } = this.getDeco(view);
-				this.bionicReadingDecorations = bionic;
+				let { textDeco } = this.getDeco(view);
+				this.betterReadingDecorations = textDeco;
 			}
 
 			update(update: ViewUpdate) {
 				if (update.docChanged || update.viewportChanged) {
-					let { bionic } = this.getDeco(update.view);
-					this.bionicReadingDecorations = bionic;
+					let { textDeco } = this.getDeco(update.view);
+					this.betterReadingDecorations = textDeco;
 				}
 			}
 
 			getDeco(view: EditorView): {
-				bionic: DecorationSet;
+				textDeco: DecorationSet;
 			} {
 				let { state } = view,
 					// @ts-ignore
-					bionicReadingDecos: Range<Decoration>[] = [];
-				if(!plugin?.settings.bionicReadingMode) {
+					betterReadingDecos: Range<Decoration>[] = [];
+				if(!plugin?.settings.betterReadingMode) {
 					return {
-						bionic: Decoration.set(bionicReadingDecos),
+						textDeco: Decoration.set(betterReadingDecos),
 					};
 				}
 				for (let part of view.visibleRanges) {
-					let bionicReadingCursor: RegExpCursor | SearchCursor;
+					let betterReadingCursor: RegExpCursor | SearchCursor;
 					try {
-						bionicReadingCursor = new RegExpCursor(state.doc, "[a-zA-Z]+", {}, part.from, part.to);
+						betterReadingCursor = new RegExpCursor(state.doc, "[a-zA-Z]+", {}, part.from, part.to);
 					} catch (err) {
 						console.debug(err);
 						continue;
 					}
-					while (!bionicReadingCursor.next().done) {
-						let { from, to } = bionicReadingCursor.value;
+					while (!betterReadingCursor.next().done) {
+						let { from, to } = betterReadingCursor.value;
 						const linePos = view.state.doc.lineAt(from)?.from;
 						let syntaxNode = syntaxTree(view.state).resolveInner(linePos + 1),
 							nodeProps: string = syntaxNode.type.prop(tokenClassNodeProp),
@@ -86,20 +86,20 @@ export function bionicReadingExtension(app: App, plugin: bionicReadingPlugin) {
 							);
 						if (excludedSection) continue;
 
-						const markDeco = Decoration.mark({ class: "cm-bionic-reading" });
+						const markDeco = Decoration.mark({ class: "cm-better-reading" });
 						let wordLength = to - from;
 
 						if (wordLength <= 3) {
-							bionicReadingDecos.push(markDeco.range(from, from +1));
+							betterReadingDecos.push(markDeco.range(from, from +1));
 						} else if (wordLength === 4) {
-							bionicReadingDecos.push(markDeco.range(from, from + 2));
+							betterReadingDecos.push(markDeco.range(from, from + 2));
 						} else if (wordLength > 4) {
-							bionicReadingDecos.push(markDeco.range(from, from + Math.ceil(wordLength * 0.50)));
+							betterReadingDecos.push(markDeco.range(from, from + Math.ceil(wordLength * 0.50)));
 						}
 					}
 				}
 				return {
-					bionic: Decoration.set(bionicReadingDecos.sort((a, b) => a.from - b.from)),
+					textDeco: Decoration.set(betterReadingDecos.sort((a, b) => a.from - b.from)),
 				};
 			}
 		},
@@ -107,7 +107,7 @@ export function bionicReadingExtension(app: App, plugin: bionicReadingPlugin) {
 			provide: plugin => [
 				// these are separated out so that we can set decoration priority
 				// it's also much easier to sort the decorations when they're grouped
-				EditorView.decorations.of(v => v.plugin(plugin)?.bionicReadingDecorations || Decoration.none),
+				EditorView.decorations.of(v => v.plugin(plugin)?.betterReadingDecorations || Decoration.none),
 			],
 		}
 	);

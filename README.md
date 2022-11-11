@@ -1,12 +1,12 @@
 # Obsidian Bionic Reading
 
-A plugin to enable bionic reading mode in Live preview mode of Obsidian.
+A plugin to enable textDeco reading mode in Live preview mode of Obsidian.
 
 ![example.png](media/example.png)
 
 ## Settings
 
-1. Allow bionic reading mode: Make the bionic reading works in Obsidian.
+1. Allow textDeco reading mode: Make the textDeco reading works in Obsidian.
 
 ## How to Install
 
