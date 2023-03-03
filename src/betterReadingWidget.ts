@@ -71,7 +71,7 @@ export function betterReadingExtension(app: App, plugin: betterReadingPlugin) {
 				for (let part of view.visibleRanges) {
 					let betterReadingCursor: RegExpCursor | SearchCursor;
 					try {
-						betterReadingCursor = new RegExpCursor(state.doc, "[a-zA-Z]+", {}, part.from, part.to);
+						betterReadingCursor = new RegExpCursor(state.doc, "[a-zA-Z\\u0400-\\u04FF]+", {}, part.from, part.to);
 					} catch (err) {
 						console.debug(err);
 						continue;
