@@ -1,12 +1,12 @@
-# Obsidian Bionic Reading
+# Better Reading Mode
 
-A plugin to enable textDeco reading mode in Live preview mode of Obsidian.
+A plugin to enable better reading mode in Live preview mode of Obsidian, which works similar to [Bionic Reading](https://bionicreading.com/).
 
 ![example.png](media/example.png)
 
 ## Settings
 
-1. Allow textDeco reading mode: Make the textDeco reading works in Obsidian.
+1. Allow better reading mode: Make the better reading works in Obsidian.
 
 ## How to Install
 
@@ -20,7 +20,7 @@ A plugin to enable textDeco reading mode in Live preview mode of Obsidian.
 
 ### Download Manually
 
-🚚: Download the latest release. Extract and put the three files (main.js, manifest.json, styles.css) to folder `{{obsidian_vault}}/.obsidian/plugins/Obsidian-Bionic-Reading`.
+🚚: Download the latest release. Extract and put the three files (main.js, manifest.json, styles.css) to folder `{{obsidian_vault}}/.obsidian/plugins/Obsidian-Better-Reading`.
 
 ## Say Thank You
 

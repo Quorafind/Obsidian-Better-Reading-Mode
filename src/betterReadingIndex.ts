@@ -29,6 +29,7 @@ export default class BetterReadingPlugin extends Plugin {
 		await this.loadSettings();
 
 		this.setupStatusBar();
+
 		this.addSettingTab(new BetterReadingSettingTab(this.app, this));
 		this.registerEditorExtension(betterReadingExtension(this.app, this));
 	}
@@ -129,7 +130,6 @@ class BetterReadingSettingTab extends PluginSettingTab {
 			.setName('Donate')
 			.setDesc('If you like this plugin, consider donating to support continued development:')
 			.addButton((bt) => {
-				// bt.buttonEl.outerHTML = `<a href="https://www.buymeacoffee.com/boninall"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=boninall&button_colour=6495ED&font_colour=ffffff&font_family=Inter&outline_colour=000000&coffee_colour=FFDD00"></a>`;
 				const aTagEL = bt.buttonEl.createEl('a', {
 					href: "https://www.buymeacoffee.com/boninall"
 				})
