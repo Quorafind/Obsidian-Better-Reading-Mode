@@ -1,7 +1,7 @@
 {
 	"id": "better-reading-mode",
 	"name": "Better Reading Mode",
-	"version": "1.2.1",
+	"version": "1.2.2",
 	"minAppVersion": "0.15.2",
 	"description": "A plugin to enable better reading mode in Live preview mode of Obsidian, which works similar to bionic reading mode.",
 	"author": "Boninall",
