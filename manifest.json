@@ -1,10 +1,10 @@
 {
-	"id": "better-reading-mode",
-	"name": "Better Reading Mode",
-	"version": "1.2.2",
-	"minAppVersion": "0.15.2",
-	"description": "A plugin to enable better reading mode in Live preview mode of Obsidian, which works similar to bionic reading mode.",
-	"author": "Boninall",
-	"authorUrl": "https://github.com/Quorafind",
-	"isDesktopOnly": false
+  "id": "better-reading-mode",
+  "name": "Better Reading Mode",
+  "version": "2.0.0",
+  "minAppVersion": "0.15.2",
+  "description": "A plugin to enable better reading mode in Live preview mode of Obsidian, which works similar to bionic reading mode.",
+  "author": "Boninall",
+  "authorUrl": "https://github.com/Quorafind",
+  "isDesktopOnly": false
 }

@@ -1,27 +1,37 @@
 /* Sets all the text color to red! */
 .br-statusbar-menu .menu-item {
-	display: flex;
-	align-items: center;
-	flex-direction: row;
-	justify-content: space-between;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 .br-statusbar-menu .menu-item-title {
-	margin-right: 10px;
+    margin-right: 10px;
 }
 
 .cm-better-reading {
-	font-weight: bold;
+    font-weight: bold;
 }
 
 .br-donate-button {
-	height: auto;
-	width: auto;
-	padding: 0;
+    height: auto;
+    width: auto;
+    padding: 0;
 }
 
 .br-donate-button a {
-	height: 50px;
-	width: auto;
-	padding: 0;
+    height: 50px;
+    width: auto;
+    padding: 0;
+}
+
+
+strong.better-reading-highlight {
+    color: var(--text-normal);
+    font-size: calc(var(--font-text-size) * 1.05);
+}
+
+span:has(strong.better-reading-highlight) {
+    color: var(--text-muted);
 }
