@@ -2,6 +2,7 @@ import { App } from "obsidian";
 import { BetterReadingSettings } from "./betterReadingIndex";
 
 interface HighlightRule {
+    regexMode: string;
     regexPattern: string;
     creator: ReplacementElementCreator;
 }
@@ -21,28 +22,6 @@ function createHighlightSpan(
 
     return parentEl;
 }
-
-export const rules: HighlightRule[] = [
-    {
-        regexPattern: '\\b[a-zA-Z\\u0400-\\u04FF]+\\b', // 正则表达式，匹配单词
-        creator: (word) => {
-            let boldLength = 0;
-            const wordLength = word.trim().length;
-
-            if (wordLength < 3) {
-                boldLength = 1;
-            } else if (wordLength === 4) {
-                boldLength = 2;
-            } else {
-                boldLength = Math.ceil(wordLength * 0.50);
-            }
-
-            if (!boldLength) return createSpan("strong");
-
-            return createHighlightSpan(word.trim(), boldLength);
-        }
-    },
-];
 
 
 export function highlightTextInElement({
@@ -64,18 +43,56 @@ export function highlightTextInElement({
     });
 }
 
+function isInsidePre(node: Node) {
+    let current = node;
+    while (current && current.parentNode) {
+        if (current.parentNode.nodeName === 'PRE') {
+            return true;
+        }
+        current = current.parentNode;
+    }
+    return false;
+}
+
+export const rules: HighlightRule[] = [
+    {
+        regexMode: 'gu',
+        regexPattern: '\\b[\\p{L}\\p{Alphabetic}\\p{Mark}\\p{Connector_Punctuation}\\p{Join_Control}\\p{Script_Extensions=Han}\\p{Script_Extensions=Hiragana}\\p{Script_Extensions=Katakana}]+\\b', // 正则表达式，匹配单词
+        creator: (word) => {
+            let boldLength = 0;
+            const wordLength = word.trim().length;
+
+            if (wordLength < 3) {
+                boldLength = 1;
+            } else if (wordLength === 4) {
+                boldLength = 2;
+            } else {
+                boldLength = Math.ceil(wordLength * 0.50);
+            }
+
+            if (!boldLength) return createSpan("strong");
+
+            return createHighlightSpan(word.trim(), boldLength);
+        }
+    },
+];
+
+
 function replaceTextWithElements(app: App, node: Node, rules: HighlightRule[]) {
-    if (node.nodeType === Node.TEXT_NODE) {
+    if (node.nodeType === Node.TEXT_NODE && !isInsidePre(node)) {
         let textContent = node.textContent || "";
 
         rules.forEach((rule) => {
             let newTextContent = "";
             let match;
-            const regex = new RegExp(rule.regexPattern, "g");
+            const regex = new RegExp(rule.regexPattern, rule.regexMode);
             let lastIndex = 0;
+
 
             while ((match = regex.exec(textContent)) !== null) {
                 const part = match[0];
+
+                console.log(part);
 
                 const precedingText = textContent.substring(lastIndex, match.index);
                 newTextContent += precedingText;
