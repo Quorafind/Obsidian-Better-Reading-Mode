@@ -57,8 +57,8 @@ function isInsidePre(node: Node) {
 export const rules: HighlightRule[] = [
     {
         regexMode: 'gu',
-		regexPattern: '\\b[\\p{L}\\p{Alphabetic}\\p{Mark}\\p{Connector_Punctuation}\\p{Join_Control}\\p{Script=Hangul}\\p{Script_Extensions=Han}\\p{Script_Extensions=Hiragana}\\p{Script_Extensions=Katakana}]+\\b',
-        creator: (word) => {
+        regexPattern: '[\\p{L}\\p{Alphabetic}\\p{Mark}\\p{Connector_Punctuation}\\p{Join_Control}\\p{Script_Extensions=Han}\\p{Script_Extensions=Hiragana}\\p{Script_Extensions=Katakana}]+|[\\uAC00-\\uD7AF]+',
+		creator: (word) => {
             let boldLength = 0;
             const wordLength = word.trim().length;
 
